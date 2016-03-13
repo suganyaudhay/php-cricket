@@ -22,10 +22,10 @@ namespace PhpCricket;
 *
 */
 define('RCA_url', 'https://api.litzscore.com/rest/v2/');
-define('RCA_access_key', '2acf7de76adeefdcb004c217b473584a');
-define('RCA_secret_key', '88fe356fdbfa6a74169838b8535a5e3f');
-define('RCA_app_id', 'itsmesai.cricapi');
-define('RCA_device_id', '12345');
+define('RCA_access_key', 'your_access_key');
+define('RCA_secret_key', 'your_secret_key');
+define('RCA_app_id', 'your_app_id');
+define('RCA_device_id', 'your_device_id');
 
 
 class PhpCriclib {

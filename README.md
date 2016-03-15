@@ -5,6 +5,35 @@ phpCricket library for Php using Roanuz Cricket API's.  Easy to install and simp
 ## Get Started
 1. Clone the php-Cricket Github project by using `https://github.com/roanuz/php-cricket.git`
 
+                                    [OR]
+
+   Install the phpCricket using Composer. Follow the below instructions.
+
+   i)  Download and install Composer by following the [official instructions.](https://getcomposer.org/download/)   
+   ii) Create a composer.json defining your dependencies inside your project root directory. 
+   ```rust
+   // Copy this content into your composer.json file.
+
+   {
+    "repositories": [
+        {
+            "url": "https://github.com/roanuz/php-cricket.git",
+            "type": "git"
+        }
+    ],
+      "minimum-stability" : "dev",
+      "prefer-stable" : true,
+      "require-dev": {
+        "roanuz/php-cricket": "dev-master"
+      }
+   }
+   ```
+
+   iii) Run Composer: composer require --dev roanuz/php-cricket
+
+   iv)  You can find the phpCricket library inside the vendor folder.
+
+
 2. Create a Cricket API App here [My APP Login](https://www.cricketapi.com/login/?next=/apps/)
 
 3. Pass the required app credentials in the library file. `src/PhpCricket/PhpCriclib.php`

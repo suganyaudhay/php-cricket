@@ -41,7 +41,7 @@ phpCricket library for Php using Roanuz Cricket API's.  Easy to install and simp
    ```rust
    //Use your Cricket API Application details below.
    
-   define('RCA_url', 'https://api.litzscore.com/rest/v2/');
+   define('RCA_url', 'https://rest.cricketapi.com/rest/v2/');
    define('RCA_access_key', 'your_access_key');
    define('RCA_secret_key', 'your_secret_key');
    define('RCA_app_id', 'your_app_id');

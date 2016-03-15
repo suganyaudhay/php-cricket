@@ -21,7 +21,7 @@ namespace PhpCricket;
 * @param RCA_app_id			Your Applicatio ID.
 *
 */
-define('RCA_url', 'https://api.litzscore.com/rest/v2/');
+define('RCA_url', 'https://rest.cricketapi.com/rest/v2/');
 define('RCA_access_key', 'your_access_key');
 define('RCA_secret_key', 'your_secret_key');
 define('RCA_app_id', 'your_app_id');

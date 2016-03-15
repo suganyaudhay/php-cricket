@@ -19,5 +19,11 @@
             "PhpCricket": "src/"
         }
     },
-    "license": "Apache-2.0"
+    "license": "Apache-2.0",
+    "repositories": [
+        {
+            "url": "https://github.com/roanuz/php-cricket.git",
+            "type": "git"
+        }
+    ],
 }

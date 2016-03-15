@@ -29,9 +29,9 @@ phpCricket library for Php using Roanuz Cricket API's.  Easy to install and simp
    }
    ```
 
-   iii) Run Composer: composer require --dev roanuz/php-cricket
+   iii) Run Composer: `composer require --dev roanuz/php-cricket`
 
-   iv)  You can find the phpCricket library inside the vendor folder.
+   iv)  You can find the phpCricket library`(roanuz/php-cricket)` inside the vendor folder.
 
 
 2. Create a Cricket API App here [My APP Login](https://www.cricketapi.com/login/?next=/apps/)

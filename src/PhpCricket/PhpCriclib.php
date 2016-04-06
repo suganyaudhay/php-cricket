@@ -10,41 +10,78 @@
  * 
  * @link https://www.cricketapi.com/
  */
+
 namespace PhpCricket;
 
 /**
 * Configuration details to access Cricket API Data.
 *
 * @param RCA_url			Url of Cricket API which gives response by sending request.
-* @param RCA_access_key		Access key of your application.
-* @param RCA_secret_key		Secret key of your application.
-* @param RCA_app_id			Your Applicatio ID.
 *
 */
 define('RCA_url', 'https://rest.cricketapi.com/rest/v2/');
-define('RCA_access_key', 'your_access_key');
-define('RCA_secret_key', 'your_secret_key');
-define('RCA_app_id', 'your_app_id');
-define('RCA_device_id', 'your_device_id');
 
 
 class PhpCriclib {
 
+	private $access_token;
+	private $credentials;
+
 	/**
-	* Access Token
+	* getValidToken
 	*
-	* This function will get the access token by calling the auth() function.
+	* This function will get the provide valid token.
 	* This access token will be automatically passed to getData() to get the response.
 	*
 	*/
-	function getAccessToken(){
-	    $response = $this->auth(RCA_device_id);
-	    $accessToken = $response['auth']['access_token'];
-	    $expiresIn = intval($response['auth']['expires']);
 
-	    return $accessToken;
+	function getValidToken(){
+		
+		$deviceCheck = $this->credentials['device_id'];
+
+		$fields_string = '';
+		
+		foreach($this->credentials as $key=>$value) { 
+			$fields_string .= $key.'='.$value.'&'; 
+		}
+		$fields_string=rtrim($fields_string, '&');
+
+		$infotxt = file_get_contents('accesstoken.txt'); 
+		$info = json_decode($infotxt, TRUE);
+		
+		/**
+		 * Check whether the token is expired or empty
+		 */
+		if(time() >= ($info[$deviceCheck]['expires'] )){
+			// CuRL init
+			$ch = curl_init();		
+			curl_setopt($ch, CURLOPT_URL, RCA_url.'auth/');
+			curl_setopt($ch, CURLOPT_POST, true);		 
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+			$response = curl_exec($ch);
+			$response = json_decode($response, true);
+			curl_close($ch);
+
+			// Store access token & expire time to a file.
+			$token_data = array( $this->credentials['device_id'] => 
+								array(
+							   		'token' => $response['auth']['access_token'],
+				         	   		'expires' => $response['auth']['expires'],
+				         	   		'deviceId' => $this->credentials['device_id']
+	        					)
+	        				); 
+	         
+			$fp = fopen('accesstoken.txt','w');
+			$stringData = json_encode($token_data);
+			fwrite($fp, $stringData);
+			// fwrite($fp,serialize($token_data));
+			return $response['auth']['access_token'];		
+		} else {
+			return $info[$deviceCheck]['token'];
+		}
 	}
-
 
 	/**
 	* Authentication
@@ -57,36 +94,16 @@ class PhpCriclib {
 	* For more info, follow the documentation in the below URL.
 	* @link https://www.cricketapi.com/docs/auth_api/
 	*/
-	function auth($deviceId) {
+	function __construct($accessKey, $secretKey, $appId, $deviceId) {
+		$this->credentials = array(
+			'access_key' => $accessKey, // Your Valid Access Key
+			'secret_key' => $secretKey, // Your Valid Secret Key
+			'app_id' => $appId,         // Your Valid App Id
+			'device_id' => $deviceId 	// Your Unique Device Id
+		);
 
-		$fields = array(
-			'access_key' => RCA_access_key, // Pass your Valid Access Key
-			'secret_key' => RCA_secret_key, // Pass your Valid Secret Key
-			'app_id' => RCA_app_id,         // Pass your Valid App Id
-			'device_id' => $deviceId,
-		);	
-
-		$fields_string = '';
-		
-		foreach($fields as $key=>$value) { 
-			$fields_string .= $key.'='.$value.'&'; 
-		}
-		$fields_string=rtrim($fields_string, '&');
-		
-		$ch = curl_init();		
-		curl_setopt($ch, CURLOPT_URL, RCA_url.'auth/');
-		curl_setopt($ch, CURLOPT_POST, true);		 
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-		$response = curl_exec($ch);
-		$response = json_decode($response, true);
-		curl_close($ch);
-		
-		return $response;
+		$this->access_token = $this->getValidToken();	
 	}
-
-
 
 	/**
 	* getData function
@@ -98,7 +115,7 @@ class PhpCriclib {
 	*
 	*/
 	function getData($req_url, $fields){
-		$url = RCA_url. $req_url. '/?access_token=' . $this->getAccessToken() . '&' . http_build_query($fields);
+		$url = RCA_url. $req_url. '/?access_token=' . $this->access_token . '&' . http_build_query($fields);
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -199,7 +216,7 @@ class PhpCriclib {
 	* @link https://www.cricketapi.com/docs/recent_match_api/
 	*/
 	function getRecentMatch($season_key, $card_type){
-
+		## TODO Split the Recent match into 2 functions.
 		$fields = array(
 		    'card_type' => $card_type
 		);

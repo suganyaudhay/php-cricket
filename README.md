@@ -36,27 +36,22 @@ phpCricket library for Php using Roanuz Cricket API's.  Easy to install and simp
 
 2. Create a Cricket API App here [My APP Login](https://www.cricketapi.com/login/?next=/apps/)
 
-3. Pass the required app credentials in the library file. `src/PhpCricket/PhpCriclib.php`
+3. Pass the required app credentials as below.
+   
    ## Config Section
    ```rust
-   //Use your Cricket API Application details below.
+   // Create a new php file under your root directory. Inside that use this code.
    
-   define('RCA_url', 'https://rest.cricketapi.com/rest/v2/');
-   define('RCA_access_key', 'your_access_key');
-   define('RCA_secret_key', 'your_secret_key');
-   define('RCA_app_id', 'your_app_id');
-   define('RCA_device_id', 'your_device_id');
+   require_once __DIR__ . '/vendor/autoload.php';
+
+   $phpCricket = new PhpCricket\PhpCriclib('your_access_key', 'your_secret_key', 'your_app_id', 'unique_device_id');
+
    ```  
 4. After Completing Authentication you can successfully access the API's.
    
    ## Example
    ```rust
-   // Create a new php file under the root directory. Inside that use this code.
-   
-   require_once __DIR__ . '/vendor/autoload.php';
-   $phpCricket = new PhpCricket\PhpCriclib();
-   
-   
+      
    // For getting particular match details.
    
    $getMatch = $phpCricket->getMatch('dev_season_2014_q1', 'summary_card');

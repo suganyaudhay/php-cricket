@@ -78,6 +78,7 @@ phpCricket library for Php using Roanuz Cricket API's.  Easy to install and simp
 * [Player Stats API](https://www.cricketapi.com/docs/player_stats_api/)
 * [Season API](https://www.cricketapi.com/docs/season_api/)
 * [Season Stats API](https://www.cricketapi.com/docs/season_stats_api/)
+* [Season Player Stats API](https://www.cricketapi.com/docs/Core-API/Season-Player-Stats-API/)
 * [Season Points API](https://www.cricketapi.com/docs/season_points_api/)
 * [Season Team API](https://www.cricketapi.com/docs/season_team_api/)
 * [Over Summary API](https://www.cricketapi.com/docs/over_summary_api/)

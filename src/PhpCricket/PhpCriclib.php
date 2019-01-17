@@ -496,7 +496,6 @@ class PhpCriclib {
 		$fields = array();
 		$url = 'news_aggregation';
 		$response = $this->getData($url, $fields);
-		print_r($response);
 		return $response;
 	}
 }

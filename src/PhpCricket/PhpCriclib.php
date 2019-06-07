@@ -114,7 +114,7 @@ class PhpCriclib {
 	* @param $fields        Pass the parameters for appending to API.
 	*
 	*/
-	function getData($req_url, $fields){
+	function getData($req_url, $fields,$res_status = false){
 		$url = RCA_url. $req_url. '/?access_token=' . $this->access_token . '&' . http_build_query($fields);
 
 		$ch = curl_init();
@@ -125,7 +125,11 @@ class PhpCriclib {
 		$response = curl_exec($ch);
 		$response = json_decode($response, true);
 		curl_close($ch);
-		return $response['data'];
+		if($res_status == true){
+			return $response;
+		}else{
+			return $response['data'];
+		}
 	}
 
 

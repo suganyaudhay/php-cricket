@@ -46,7 +46,7 @@ class PhpCriclib {
 		}
 		$fields_string=rtrim($fields_string, '&');
 
-		$infotxt = file_get_contents('accesstoken.txt'); 
+		$infotxt = @file_get_contents('accesstoken.txt'); 
 		$info = json_decode($infotxt, TRUE);
 		
 		/**
